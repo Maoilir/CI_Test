@@ -5,7 +5,6 @@ volumes: [
   hostPathVolume(mountPath: "/var/run/docker.sock", hostPath: "/var/run/docker.sock")
 ]) {
   node('docker-build') {
-    def tag = "quay.io/maoilir/cidemo:${env.GIT_COMMIT}"
     stage('Checkout') {
       checkout scm
     }
@@ -15,6 +14,12 @@ volumes: [
         echo 'In container'
         sh 'ls -al'
         sh 'pwd'
+
+        sh "git rev-parse HEAD > .git/commit-id"
+        def commit_id = readFile('.git/commit-id').trim()
+
+        def tag = "quay.io/maoilir/cidemo:${commit_id}"
+
         sh "docker build -t ${tag} ."
         withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'Quay.io',
           usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
