@@ -16,6 +16,7 @@ volumes: [
         sh 'pwd'
         sh 'docker build -t maoilir/test .'
         sh 'docker inspect -f {{.Id}} maoilir/test'
+        docker.build('maoilir/test:0.0.1', '.')
       }
     }
     stage('Test') {
