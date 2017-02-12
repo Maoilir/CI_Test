@@ -7,9 +7,9 @@ volumes: [
   node('docker-build') {
     stage('Checkout') {
       checkout scm
-      sh "git rev-parse HEAD > .git/commit-id"
-      def commit_id = readFile('.git/commit-id').trim()
     }
+    sh "git rev-parse HEAD > .git/commit-id"
+    def commit_id = readFile('.git/commit-id').trim()
     stage('Build') {
       echo 'Building..'
       container('docker') {
