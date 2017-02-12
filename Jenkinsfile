@@ -4,8 +4,12 @@ podTemplate(label: 'docker-build', cloud: 'default',  containers: [
   stage('Build') {
     node('docker-build') {
       echo 'Building..'
-      checkout scm
-      sh './test_script.sh'
+      container('docker') {
+        echo 'In container'
+        checkout scm
+        sh './test_script.sh'
+        sh 'docker build .'
+      }
     }
   }
   stage('Test') {
