@@ -7,6 +7,8 @@ volumes: [
   node('docker-build') {
     stage('Checkout') {
       checkout scm
+      sh "git rev-parse HEAD > .git/commit-id"
+      def commit_id = readFile('.git/commit-id').trim()
     }
     stage('Build') {
       echo 'Building..'
@@ -14,9 +16,6 @@ volumes: [
         echo 'In container'
         sh 'ls -al'
         sh 'pwd'
-
-        sh "git rev-parse HEAD > .git/commit-id"
-        def commit_id = readFile('.git/commit-id').trim()
 
         def tag = "quay.io/maoilir/cidemo:${commit_id}"
 
