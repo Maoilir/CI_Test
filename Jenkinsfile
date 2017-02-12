@@ -8,7 +8,7 @@ volumes: [
     stage('Checkout') {
       checkout scm
     }
-    sh "git rev-parse HEAD > .git/commit-id"
+    sh "git rev-parse --short HEAD > .git/commit-id"
     def commit_id = readFile('.git/commit-id').trim()
     stage('Build') {
       echo 'Building..'
