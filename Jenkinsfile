@@ -14,9 +14,9 @@ volumes: [
         echo 'In container'
         sh 'ls -al'
         sh 'pwd'
-        sh 'docker build -t maoilir/test .'
-        sh 'docker inspect -f {{.Id}} maoilir/test'
-        docker.build('maoilir/test:0.0.1', '.')
+        def tag = 'quay.io/maoilir/cidemo:${env.BUILD_TAG}'
+        sh 'docker build -t ${tag} .'
+        sh 'docker push ${tag}'
       }
     }
     stage('Test') {
