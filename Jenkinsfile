@@ -18,7 +18,7 @@ volumes: [
         sh "docker build -t ${tag} ."
         withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'Quay.io',
           usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
-          sh "docker -u $USERNAME -p $PASSWORD quay.io/maoilir"
+          sh "docker login -u $USERNAME -p $PASSWORD quay.io/maoilir"
           sh "docker push ${tag}"
         }
       }
