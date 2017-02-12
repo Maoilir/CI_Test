@@ -6,6 +6,8 @@ podTemplate(label: 'docker-build',  containers: [
       echo 'Building..'
       container('docker') {
         echo 'In container'
+        sh 'ls -al'
+        sh 'pwd'
         sh 'docker build .'
       }
     }
