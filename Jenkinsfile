@@ -1,21 +1,8 @@
-pipeline {
-    agent any
+node("docker") {
+    sh "git rev-parse HEAD > .git/commit-id"
+    def commit_id = readFile('.git/commit-id').trim()
+    println commit_id
 
-    stages {
-        stage('Build') {
-            steps {
-                echo 'Building.'
-            }
-        }
-        stage('Test') {
-            steps {
-                echo 'Testing..'
-            }
-        }
-        stage('Deploy') {
-            steps {
-                echo 'Deploying....'
-            }
-        }
-    }
+    stage "build"
+    def app = docker.build "testimage"
 }
