@@ -16,7 +16,11 @@ volumes: [
         sh 'pwd'
         def tag = "quay.io/maoilir/cidemo:${env.GIT_COMMIT}"
         sh "docker build -t ${tag} ."
-        sh "docker push ${tag}"
+        withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'Quay.io',
+          usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
+          sh "docker -u $USERNAME -p $PASSWORD quay.io/maoilir"
+          sh "docker push ${tag}"
+        }
       }
     }
     stage('Test') {
