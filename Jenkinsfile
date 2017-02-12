@@ -14,7 +14,8 @@ volumes: [
         echo 'In container'
         sh 'ls -al'
         sh 'pwd'
-        def myEnv = docker.build('maoilir/test', '.')
+        sh 'docker build -t maoilir/test .'
+        sh 'docker inspect maoilir/test'
       }
     }
     stage('Test') {
