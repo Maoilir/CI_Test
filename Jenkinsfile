@@ -15,7 +15,7 @@ volumes: [
         sh 'ls -al'
         sh 'pwd'
         sh 'docker build -t maoilir/test .'
-        sh 'docker inspect maoilir/test'
+        sh 'docker inspect -f {{.Id}} maoilir/test'
       }
     }
     stage('Test') {
