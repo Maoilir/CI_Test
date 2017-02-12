@@ -1,8 +1,8 @@
 podTemplate(label: 'docker-build', cloud: 'default',  containers: [
-  containerTemplate(name: 'docker', image: 'docker:dind', ttyEnabled: true, command: 'cat', privileged: true, instanceCap: 1)
+  containerTemplate(name: 'docker', image: 'docker:dind', ttyEnabled: true, command: 'cat')
 ]) {
-  stage('Build') {
-    node('docker-build') {
+  node('docker-build') {
+    stage('Build') {
       echo 'Building..'
       container('docker') {
         echo 'In container'
@@ -11,11 +11,11 @@ podTemplate(label: 'docker-build', cloud: 'default',  containers: [
         sh 'docker build .'
       }
     }
-  }
-  stage('Test') {
-    echo 'Testing..'
-  }
-  stage('Deploy') {
-    echo 'Deploying....'
+    stage('Test') {
+      echo 'Testing..'
+    }
+    stage('Deploy') {
+      echo 'Deploying....'
+    }
   }
 }
